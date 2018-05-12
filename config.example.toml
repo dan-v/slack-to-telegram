@@ -1,0 +1,7 @@
+[telegram]
+user = 123456789
+token = "23456789:ABCDE_fB19OHQZUF3FPPPF43PTEEB"
+
+[[slack]]
+name = "workspace label #1"
+token = "xoxp-xxxxxxx-xxxxxxxx-xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
