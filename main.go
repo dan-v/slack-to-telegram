@@ -91,7 +91,7 @@ func connectSlackRTM(slackName, slackToken string, telegramUser int64, bot *tgbo
 				continue
 			}
 			if presence.ConnectionCount > 1 {
-				logSlackError(slackName, errors.New("not sending telegram message as user is online"))
+				logSlackError(slackName, fmt.Errorf("not sending telegram message as user is online. %+v", presence))
 				continue
 			}
 
