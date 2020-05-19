@@ -11,7 +11,7 @@ I currently run an Android OS on my phone without Google services. Slack for And
 * From the Telegram account you want to receive messages on, get your user ID by sending a message to `@get_id_bot`
 * Create a telegram bot (https://core.telegram.org/bots#3-how-do-i-create-a-bot) and get the token
 * Send a test message from your Telegram account to your bots username
-* For each Slack account you want to forward messages, you'll need access to the RTM API which previously was possible with legacy tokens but this has been disabled now. Instead you can use https://github.com/dan-v/slack-rtm-token to get an OAuth token with appropriate access, but note that it will require installing an app in each organization.
+* For each Slack account you want to forward messages, you'll need access to the RTM API which previously was possible with legacy tokens but this has been disabled now. Instead you can use [this approach](https://github.com/wee-slack/wee-slack#get-a-session-token) which doesn't require installing an app in your organization. Or if you can't get that to work, you can use [slack-rtm-token](https://github.com/dan-v/slack-rtm-token) to get an OAuth token with appropriate access, but this will require installing an app in each organization.
 
 ## Config File
 Create a file named config.toml and fill in the details from initial setup above.
