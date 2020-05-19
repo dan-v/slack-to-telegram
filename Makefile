@@ -19,7 +19,6 @@ ARCH := amd64
 	coverage \
 	vet \
 	errors \
-	lint \
 	fmt \
 	env \
 	build \
@@ -28,7 +27,7 @@ ARCH := amd64
 	check \
 	version
 
-all: fmt lint vet build-all
+all: fmt vet build-all
 
 help:
 	@echo 'Usage: make <OPTIONS> ... <TARGETS>'
@@ -44,7 +43,6 @@ help:
 	@echo '    test               Run unit tests.'
 	@echo '    coverage           Report code tests coverage.'
 	@echo '    vet                Run go vet.'
-	@echo '    lint               Run golint.'
 	@echo '    fmt                Run go fmt.'
 	@echo '    env                Display Go environment.'
 	@echo '    build              Build project for current platform.'
@@ -53,7 +51,7 @@ help:
 	@echo '    check              Verify compiled binary.'
 	@echo '    version            Display Go version.'
 	@echo ''
-	@echo 'Targets run by default are: imports, fmt, lint, vet, errors and build.'
+	@echo 'Targets run by default are: imports, fmt, vet, errors and build.'
 	@echo ''
 
 print-%:
@@ -72,7 +70,6 @@ clean-vendor:
 clean-all: clean clean-artifacts clean-vendor
 
 tools:
-	go get github.com/golang/lint/golint
 	go get github.com/axw/gocov/gocov
 	go get github.com/matm/gocov-html
 	go get github.com/tools/godep
@@ -96,9 +93,6 @@ coverage:
 
 vet:
 	go vet -v ./...
-
-lint:
-	golint $(go list ./... | grep -v /vendor/)
 
 fmt:
 	go fmt ./...

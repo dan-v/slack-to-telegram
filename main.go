@@ -10,7 +10,7 @@ import (
 	"sync"
 
 	"github.com/BurntSushi/toml"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 	"gopkg.in/telegram-bot-api.v4"
 )
 
@@ -37,7 +37,7 @@ func parseConfig(filename string) (tomlConfig, error) {
 	}
 
 	if config.Telegram.Token == "" || config.Telegram.User == 0 {
-		return config, errors.New("Need to specify telegram user and token in config file")
+		return config, errors.New("need to specify telegram user and token in config file")
 	}
 
 	for _, s := range config.Slack {
@@ -51,7 +51,7 @@ func parseConfig(filename string) (tomlConfig, error) {
 func connectTelegramBotAPI(token string) (*tgbotapi.BotAPI, error) {
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to connect telegram bot: %v", err)
+		return nil, fmt.Errorf("failed to connect telegram bot: %v", err)
 	}
 	return bot, nil
 }
@@ -65,9 +65,8 @@ func logSlackMessage(workspace string, message string) {
 }
 
 func connectSlackRTM(slackName, slackToken string, telegramUser int64, bot *tgbotapi.BotAPI, wg *sync.WaitGroup) {
-	api := slack.New(slackToken)
 	logger := log.New(os.Stdout, fmt.Sprintf("%v: ", slackName), log.Lshortfile|log.LstdFlags)
-	slack.SetLogger(logger)
+	api := slack.New(slackToken, slack.OptionLog(logger))
 
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
@@ -130,8 +129,16 @@ func connectSlackRTM(slackName, slackToken string, telegramUser int64, bot *tgbo
 }
 
 func main() {
-	configFlag := flag.String("config", "config.toml", "config file")
+	configFlag := flag.String("config", "", "config file")
 	flag.Parse()
+
+	if *configFlag == "" {
+		log.Fatalf("you must specify config file with -config flag\n")
+	}
+
+	if _, err := os.Stat(*configFlag); os.IsNotExist(err) {
+		log.Fatalf("config file '%v' does not exist\n", *configFlag)
+	}
 
 	config, err := parseConfig(*configFlag)
 	if err != nil {

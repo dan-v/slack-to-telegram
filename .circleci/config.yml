@@ -2,14 +2,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.10
-
-    working_directory: /go/src/github.com/dan-v/slack-to-telegram
+      - image: circleci/golang:1.14
 
     steps:
       - checkout
-
       - run: make tools && make zip
-
       - store_artifacts:
           path: artifacts/zips
