@@ -1,3 +1,5 @@
+<b>This repository is no longer maintained.</b>
+
 `slack-to-telegram` is a simple way to forward notifications from Slack to Telegram when you are not logged into Slack. It uses Slack's [Real Time Messaging API](https://api.slack.com/rtm) to connect to specified accounts and will forward messages through Telegram's [Bot API](https://core.telegram.org/bots/api) to you.
 
 ## Why 
